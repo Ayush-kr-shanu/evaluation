@@ -8,10 +8,6 @@ const userRoute=express.Router()
 userRoute.post('/register',async(req,res)=>{
     const {name, email, gender, password, age, city}=req.body
     try {
-        const existUser=await UserModel.find({email:req.body.email})
-        if(existUser){
-            res.send({"msg":"User already registered"})
-        }else{
        bcrypt.hash(password,5,async(err,hash)=>{
         if(err){
             res.send({"msg":"something went wrong", error:err.message})
@@ -21,9 +17,7 @@ userRoute.post('/register',async(req,res)=>{
             res.send('User has been registered')
         }
        })
-     }
-
-    } catch (err) {
+     } catch (err) {
         res.send({"msg":"something went wrong", error:err.message})
     }
 })
